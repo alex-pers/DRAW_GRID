@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">BLA</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    
+    <string name="title_scale">Scale</string>
+    <string name="title_scroll">Scroll</string>
+    
+    <string name="scrollX">Scroll X-axis</string>
+    <string name="scrollY">Scroll Y-axis</string>
+    <string name="adout_scrollX">Allow to scroll the X-axis?</string>
+    <string name="adout_scrollY">Allow to scroll the Y-axis?</string>
+    
+    <string name="scaleX">Scale X-axis</string>
+    <string name="scaleY">Scale Y-axis</string>
+    <string name="adout_scaleX">Allow to scale the X-axis?</string>
+    <string name="adout_scaleY">Allow to scale the Y-axis?</string>
+    
+    <string name="pr_scrollX">scrollx</string>
+    <string name="pr_scrollY">scrolly</string>
+    <string name="pr_scaleX">scalex</string>
+    <string name="pr_scaleY">scaleY</string>
+    
+     <string name="menu_Open">Open</string>
+     <string name="menu_Save">Save</string>
+     <string name="menu_Something">Something yet</string>
+     <string name="menu_Setting">Settengs</string>
+</resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <PreferenceCategory android:title="@string/title_scale" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pr_scaleX"
+            android:summary="@string/adout_scaleX"
+            android:title="@string/scaleX" />
+         <CheckBoxPreference
+             android:defaultValue="true"
+            android:key="@string/pr_scaleY"
+            android:summary="@string/adout_scaleY"
+            android:title="@string/scaleY" />
+    </PreferenceCategory>
+    
+        <PreferenceCategory android:title="@string/title_scroll" >
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="@string/pr_scrollX"
+            android:summary="@string/adout_scrollX"
+            android:title="@string/scrollX" />
+         <CheckBoxPreference
+             android:defaultValue="true"
+            android:key="@string/pr_scrollY"
+            android:summary="@string/adout_scrollY"
+            android:title="@string/scrollY" />
+    </PreferenceCategory>
+    
+
+</PreferenceScreen>
