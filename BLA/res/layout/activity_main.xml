@@ -5,7 +5,7 @@
     tools:context=".MainActivity" >
 
     
-    <com.example.bla.view.ViewPlusGrid 
+    <by.draw.grid.view.ViewPlusGrid 
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/draw_field"/>
