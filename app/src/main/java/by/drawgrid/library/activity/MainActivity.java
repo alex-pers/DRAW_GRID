@@ -29,7 +29,7 @@ public class MainActivity extends Activity {
     }
 
     void init() {
-        viewPlusGrid = (ViewPlusGrid) findViewById(R.id.draw_field);
+        viewPlusGrid =  findViewById(R.id.draw_field);
 
     }
 
