@@ -2,12 +2,16 @@ package by.drawgrid.library.model;
 
 import android.graphics.Canvas;
 
+import by.drawgrid.library.view.kotlin.GridCalculator;
+
 abstract public class Element {
 
 	public int ID;
 	final public int TYPE;
 	boolean active;
 	float DPI_COEFICIENT = 1;
+
+	GridCalculator gridCalculator;
 	
 	public Element(int type){
 		this.TYPE = type;

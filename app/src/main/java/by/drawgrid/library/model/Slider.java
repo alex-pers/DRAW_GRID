@@ -39,14 +39,14 @@ public class Slider extends Element {
 		super(Constant.TYPE_SLIDER);
 		point.x = x;
 		point.y = y;
-		pointDraw =  ViewPlusGrid.calcDrawCoordinate(point);
+		pointDraw =  gridCalculator.calcDrawCoordinate(point);
 		init();
 	}
 	
 	void init(){
-		lineWidth *= ViewPlusGrid.DPI_DENSITY;
-		coachWidth *= ViewPlusGrid.DPI_DENSITY;
-		textSize *= ViewPlusGrid.DPI_DENSITY;
+		lineWidth *= gridCalculator.getDPI_DENSITY();
+		coachWidth *= gridCalculator.getDPI_DENSITY();
+		textSize *= gridCalculator.getDPI_DENSITY();
 
 		color = Color.RED;
 		
@@ -75,62 +75,62 @@ public class Slider extends Element {
 		
 		if(STATE_SLIDER == ONE_SLIDER){
 		
-			pointDraw =  ViewPlusGrid.calcDrawCoordinate(point);
+			pointDraw =  gridCalculator.calcDrawCoordinate(point);
 			float xDraw = pointDraw.x;
 			
-			canvas.drawLine(xDraw, 0, xDraw, ViewPlusGrid.H, paintLine);
+			canvas.drawLine(xDraw, 0, xDraw, gridCalculator.getH(), paintLine);
 	
 			wallpath.reset(); // only needed when reusing this path for a new build
-			wallpath.moveTo(xDraw, ViewPlusGrid.H-marginFromGrid); // used for first point
-			wallpath.lineTo(xDraw+(coachWidth/2), ViewPlusGrid.H-(marginFromGrid/2));
-			wallpath.lineTo(xDraw+(coachWidth/2), ViewPlusGrid.H);
-			wallpath.lineTo(xDraw-(coachWidth/2), ViewPlusGrid.H);
-			wallpath.lineTo(xDraw-(coachWidth/2), ViewPlusGrid.H-(float)(marginFromGrid/2));
-			wallpath.lineTo(xDraw, ViewPlusGrid.H-marginFromGrid);
+			wallpath.moveTo(xDraw, gridCalculator.getH()-marginFromGrid); // used for first point
+			wallpath.lineTo(xDraw+(coachWidth/2), gridCalculator.getH()-(marginFromGrid/2));
+			wallpath.lineTo(xDraw+(coachWidth/2), gridCalculator.getH());
+			wallpath.lineTo(xDraw-(coachWidth/2), gridCalculator.getH());
+			wallpath.lineTo(xDraw-(coachWidth/2), gridCalculator.getH()-(float)(marginFromGrid/2));
+			wallpath.lineTo(xDraw, gridCalculator.getH()-marginFromGrid);
 			canvas.drawPath(wallpath, paintCoach);
 			
 			String str = String.format(" %.0f", point.x);
-			canvas.drawText(str, xDraw-paintText.measureText(str)/2, (float) (ViewPlusGrid.H-(marginFromGrid/4))  , paintText);
+			canvas.drawText(str, xDraw-paintText.measureText(str)/2, (float) (gridCalculator.getH()-(marginFromGrid/4))  , paintText);
 		}
 		
 		if(STATE_SLIDER == LEFT_SLIDER){
 			
-			pointDraw =  ViewPlusGrid.calcDrawCoordinate(point);
+			pointDraw =  gridCalculator.calcDrawCoordinate(point);
 			float xDraw = pointDraw.x;
 			
-			canvas.drawLine(xDraw, 0, xDraw, ViewPlusGrid.H, paintLine);
+			canvas.drawLine(xDraw, 0, xDraw, gridCalculator.getH(), paintLine);
 	
 			wallpath.reset(); // only needed when reusing this path for a new build
-			wallpath.moveTo(xDraw, ViewPlusGrid.H-marginFromGrid); // used for first point
-			wallpath.lineTo(xDraw, ViewPlusGrid.H);
-			wallpath.lineTo(xDraw- coachWidth, ViewPlusGrid.H);
-			wallpath.lineTo(xDraw- coachWidth, ViewPlusGrid.H-(marginFromGrid/2));
-			wallpath.lineTo(xDraw, ViewPlusGrid.H-marginFromGrid);
+			wallpath.moveTo(xDraw, gridCalculator.getH()-marginFromGrid); // used for first point
+			wallpath.lineTo(xDraw, gridCalculator.getH());
+			wallpath.lineTo(xDraw- coachWidth, gridCalculator.getH());
+			wallpath.lineTo(xDraw- coachWidth, gridCalculator.getH()-(marginFromGrid/2));
+			wallpath.lineTo(xDraw, gridCalculator.getH()-marginFromGrid);
 		
 			canvas.drawPath(wallpath, paintCoach);
 			
 			String str = String.format(" %.0f", point.x);
-			canvas.drawText(str, xDraw-coachWidth, (float) (ViewPlusGrid.H-(marginFromGrid/4))  , paintText);
+			canvas.drawText(str, xDraw-coachWidth, (float) (gridCalculator.getH()-(marginFromGrid/4))  , paintText);
 		}
 		
 		if(STATE_SLIDER == RIGHT_SLIDER){
 			
-			pointDraw =  ViewPlusGrid.calcDrawCoordinate(point);
+			pointDraw =  gridCalculator.calcDrawCoordinate(point);
 			float xDraw = pointDraw.x;
 			
-			canvas.drawLine(xDraw, 0, xDraw, ViewPlusGrid.H, paintLine);
+			canvas.drawLine(xDraw, 0, xDraw, gridCalculator.getH(), paintLine);
 	
 			wallpath.reset(); // only needed when reusing this path for a new build
-			wallpath.moveTo(xDraw, ViewPlusGrid.H-marginFromGrid); // used for first point
-			wallpath.lineTo(xDraw, ViewPlusGrid.H);
-			wallpath.lineTo(xDraw+ coachWidth, ViewPlusGrid.H);
-			wallpath.lineTo(xDraw+ coachWidth, ViewPlusGrid.H-(marginFromGrid/2));
-			wallpath.lineTo(xDraw, ViewPlusGrid.H-marginFromGrid);
+			wallpath.moveTo(xDraw, gridCalculator.getH()-marginFromGrid); // used for first point
+			wallpath.lineTo(xDraw, gridCalculator.getH());
+			wallpath.lineTo(xDraw+ coachWidth, gridCalculator.getH());
+			wallpath.lineTo(xDraw+ coachWidth, gridCalculator.getH()-(marginFromGrid/2));
+			wallpath.lineTo(xDraw, gridCalculator.getH()-marginFromGrid);
 		
 			canvas.drawPath(wallpath, paintCoach);
 			
 			String str = String.format(" %.0f", point.x);
-			canvas.drawText(str, xDraw, (float) (ViewPlusGrid.H-(marginFromGrid/4))  , paintText);
+			canvas.drawText(str, xDraw, (float) (gridCalculator.getH()-(marginFromGrid/4))  , paintText);
 		}
 		
 		

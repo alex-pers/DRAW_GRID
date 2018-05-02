@@ -23,6 +23,7 @@ import by.drawgrid.library.model.Point;
 import by.drawgrid.library.model.Polygon;
 import by.drawgrid.library.model.Slider;
 import by.drawgrid.library.myInterface.InterfaceManagerElement;
+import by.drawgrid.library.view.kotlin.GridCalculator;
 
 
 public class ViewPlusGrid extends View {
@@ -227,7 +228,7 @@ public class ViewPlusGrid extends View {
 
         calculator.setW(w);
         calculator.setH(h);
-        calculator. calcDrawKoeficient();
+        calculator.calcDrawKoeficient();
 
     }
 
@@ -604,13 +605,14 @@ public class ViewPlusGrid extends View {
 //        DrawKoeficientY = (ViewPlusGrid.H / (ViewPlusGrid.pointMAX.y - ViewPlusGrid.pointMIN.y));
 //    }
 
-//    public void changeMaxMin(Point pMAX, Point pMIN) {
+    public void changeMaxMin(Point pMAX, Point pMIN) {
+        calculator.changeMaxMin(pMAX, pMIN);
 //        pointMAX = pMAX;
 //        pointMIN = pMIN;
 //        calcDrawKoeficient();
-//        invalidate();
-    // TODO: 28.04.2018 INVALIDATE
-//    }
+        invalidate();
+        //TODO: 28.04.2018 INVALIDATE
+    }
 
     public void setManager(InterfaceManagerElement interfaceManagerElement) {
         managerElement = interfaceManagerElement;

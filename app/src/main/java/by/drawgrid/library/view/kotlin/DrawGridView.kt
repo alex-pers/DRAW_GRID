@@ -1,4 +1,4 @@
-package by.drawgrid.library.view
+package by.drawgrid.library.view.kotlin
 
 import android.content.Context
 import android.util.AttributeSet

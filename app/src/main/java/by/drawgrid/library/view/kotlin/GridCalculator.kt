@@ -1,4 +1,4 @@
-package by.drawgrid.library.view
+package by.drawgrid.library.view.kotlin
 
 import android.util.Log
 import by.drawgrid.library.model.Point
