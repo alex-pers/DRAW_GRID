@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import by.drawgrid.library.R;
 import by.drawgrid.library.model.Point;
 import by.drawgrid.library.view.ViewPlusGrid;
+import by.drawgrid.library.view.kotlin.DrawGridView;
 
 public class MainActivity extends Activity {
 
@@ -19,7 +20,7 @@ public class MainActivity extends Activity {
     public static final int IDM_EXIT = 104;
     public static final int IDM_SETTINGS = 103;
 
-    ViewPlusGrid viewPlusGrid;
+    DrawGridView viewPlusGrid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

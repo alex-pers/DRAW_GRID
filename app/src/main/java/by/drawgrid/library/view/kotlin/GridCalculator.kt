@@ -1,10 +1,11 @@
 package by.drawgrid.library.view.kotlin
 
 import android.util.Log
+import android.view.ScaleGestureDetector
 import by.drawgrid.library.model.Point
 
 
-open class GridCalculator {
+open class GridCalculator : ScaleGestureDetector.SimpleOnScaleGestureListener() {
 
     companion object {
         internal var MAX_SCALE = 100f
@@ -102,7 +103,7 @@ open class GridCalculator {
         //todo invalidate
     }
 
-     fun moveSystem(dx: Float, dy: Float) {
+    fun moveSystem(dx: Float, dy: Float) {
 
         val copyPoint = Point(pointMAX?.x!!, pointMAX?.y!!)
 
@@ -118,10 +119,38 @@ open class GridCalculator {
 
     }
 
-     fun fingerInHorizontalMargin(x: Float, y: Float): Boolean {// если фолс -- не попал, тру - попал
+    fun fingerInHorizontalMargin(x: Float, y: Float): Boolean {// если фолс -- не попал, тру - попал
 
         return if (y >= H - MARGIN) true else false
 
+    }
+
+    override fun onScale(detector: ScaleGestureDetector): Boolean {
+        if (detector.isInProgress) {
+            val s: Float
+
+            s = (1.toFloat() / ((detector.previousSpan / detector.currentSpan - 1.0) * 0.5 + 1)).toFloat()// current
+            // SCALE
+
+            val point = Point(detector.focusX,
+                    detector.focusY)
+
+            if ((flag_scale_X + flag_scale_Y) == 2) {
+
+                correctScaleP0(s, point);
+            } else {
+                if (flag_scale_X == 1) {
+                    correctScaleX(s, point);
+                }
+                if (flag_scale_Y == 1) {
+                    correctScaleY(s, point);
+                }
+            }
+
+        }
+        calcDrawKoeficient()
+        // invalidate();
+        return true
     }
 
 

@@ -1,6 +1,8 @@
 package by.drawgrid.library.model;
 
+import android.content.Context;
 import android.graphics.Canvas;
+import android.util.DisplayMetrics;
 
 import by.drawgrid.library.view.kotlin.GridCalculator;
 
@@ -9,14 +11,16 @@ abstract public class Element {
 	public int ID;
 	final public int TYPE;
 	boolean active;
-	float DPI_COEFICIENT = 1;
+	float dpi = 1;
 
-	GridCalculator gridCalculator;
-	
-	public Element(int type){
+	public GridCalculator gridCalculator;
+
+	public Element(Context context, int type){
+		DisplayMetrics dm = context.getResources().getDisplayMetrics();
+		dpi = dm.density;
 		this.TYPE = type;
 	}
-	
+
 	abstract public void draw(Canvas canvas);
 
 	abstract public int getColor();
@@ -36,6 +40,6 @@ abstract public class Element {
 	}
 
 
-	
-	
+
+
 }

@@ -1,5 +1,6 @@
 package by.drawgrid.library.model;
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -15,15 +16,14 @@ public class Polygon extends Element {
     boolean closedLine = false;// if true -- close! false -- open
 
 
-    public Polygon() {
-        super(Constant.TYPE_POLYGON);
+    public Polygon(Context context) {
+        super(contextConstant.TYPE_POLYGON);
         init();
     }
 
     void init() {
 
         widthLine *= gridCalculator.getDPI_DENSITY();
-
         linePaint = new Paint();
         linePaint.setStyle(Paint.Style.STROKE);
         linePaint.setColor(Color.BLUE);

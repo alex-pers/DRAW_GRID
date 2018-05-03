@@ -3,7 +3,7 @@
     android:layout_height="match_parent">
 
 
-    <by.drawgrid.library.view.ViewPlusGrid
+    <by.drawgrid.library.view.kotlin.DrawGridView
         android:id="@+id/draw_field"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />

@@ -1,6 +1,7 @@
 package by.drawgrid.library.model;
 
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -25,9 +26,9 @@ public class Grid extends Element {
 //		init(1);
 //	}
 
-    public Grid() {
-        super(Constant.TYPE_GRID);
-        init(gridCalculator.getDPI_DENSITY());
+    public Grid(Context context) {
+        super(context,Constant.TYPE_GRID);
+        init(dpi);
     }
 
     void init(float dpi) {

@@ -163,9 +163,9 @@ public class ViewPlusGrid extends View {
         calculator.setMARGIN(calculator.getMARGIN() * dm.density); //*= DPI_DENSITY;
         calculator.setDELTA_X_Y_FOR_FINGER(calculator.getDELTA_X_Y_FOR_FINGER() * dm.density);
 
-        grid = new Grid();
+        grid = new Grid(context);
         grid.margin = calculator.getMARGIN();
-        polygon = new Polygon();
+        polygon = new Polygon(contextr);
 
         setSlider(65);
         setSlider(55);
@@ -253,7 +253,6 @@ public class ViewPlusGrid extends View {
         if (sliderRight != null) {
             sliderRight.draw(canvas);
         }
-
     }
 
     public void clearDrawFild(Context context) {
@@ -265,8 +264,6 @@ public class ViewPlusGrid extends View {
 
         calculator.changeMaxMin(new Point(startMaxX, startMaxY), new Point(0, 0));
         init(context);
-
-
     }
 
 
@@ -433,8 +430,6 @@ public class ViewPlusGrid extends View {
         }
     }
 
-    ;
-
 
     private boolean fingerLandOnSlides(float x, float y, Slider slider) {// если фолс -- не попал, тру - попал
 
@@ -458,12 +453,10 @@ public class ViewPlusGrid extends View {
                 break;
         }
 
-
         return false;
     }
 
     private void moveSlider(float dx, int activeSlider) {
-
 
         switch (activeSlider) {
             case 1:
