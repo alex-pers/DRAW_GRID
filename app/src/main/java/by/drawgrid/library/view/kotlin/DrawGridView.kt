@@ -10,16 +10,19 @@ import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.View
 import by.drawgrid.library.model.*
+import by.drawgrid.library.myInterface.CalculatorListener
 import by.drawgrid.library.myInterface.InterfaceManagerElement
 import java.util.*
 
 /**
  *Created on 28.04.2018.
  */
-class DrawGridView : View {
+class DrawGridView : View, CalculatorListener {
+
+
     companion object {
         val INVALIDATE_VIEW = 1
-        val TIMER_FOR_REDRAW: Long = 30
+        val TIMER_FOR_REDRAW: Long = 50
     }
 
     var calculator: GridCalculator? = null
@@ -60,15 +63,18 @@ class DrawGridView : View {
 
             if (flagAutoScrollRight) {
 //                moveSlider(4f, activeSlider)
+                Log.d("INVALIDATE", "call invalidate 1");
                 invalidate()
             }
 
             if (flagAutoScrollLeft) {
 //                moveSlider(4f, activeSlider)
+                Log.d("INVALIDATE", "call invalidate 2");
                 invalidate()
             }
 
             if (msg.what == INVALIDATE_VIEW && flag_event_for_redrow_view == true) {
+                Log.d("INVALIDATE", "call invalidate 3");
                 invalidate()
             }
 //            setFlagForInvalidate(false)
@@ -94,6 +100,7 @@ class DrawGridView : View {
 
     fun initView(context: Context?, attrs: AttributeSet?) {
         calculator = GridCalculator()
+        calculator?.listener = this
         calculator?.pointMAX = Point(startMaxX, startMaxY)
         calculator?.pointMIN = Point(0f, 0f)
 
@@ -105,11 +112,11 @@ class DrawGridView : View {
         mScaleDetector = ScaleGestureDetector(context, calculator)
 
 
-        grid = Grid(dm?.density)
+        grid = Grid(getContext())
         grid?.margin = calculator?.MARGIN
         grid?.gridCalculator = calculator
 
-        polygon = Polygon()
+        polygon = Polygon(getContext())
 
 
         addElementToManager(polygon!!)
@@ -202,9 +209,8 @@ class DrawGridView : View {
                 if (stateFinger == STATE_POINT) {
                     val pointDot = calculator?.calkDotCoordinate(event.x, event.y)
 
-                    val dot = Dot(pointDot)
-                    polygon?.dots?.add(dot)
-                    // points.add(dot);
+                    val dot = Dot(pointDot, context)
+                    polygon?.addDot(dot)
                     Log.d("field",
                             "touch x:" + event.x + "  y:" + event.y
                                     + "   count:" + event.pointerCount)
@@ -245,14 +251,14 @@ class DrawGridView : View {
                             firstFingerDown.x = event.getX(0)
                             firstFingerDown.y = event.getY(0)
                             calculator?.calcDrawKoeficient()
-                            // invalidate();
+                            Log.d("INVALIDATE", "call invalidate 4");
+                            invalidate()
                             stateFinger = STATE_MOVE_GRID
                         }
                     }
                 }
             }
         }
-
 
         return true
     }
@@ -383,34 +389,34 @@ class DrawGridView : View {
     fun setSlider(x: Float) {
         if (sliderLeft == null) {
 
-            sliderLeft = Slider(x, 0f)
+            sliderLeft = Slider(context, x, 0f)
             sliderLeft?.STATE_SLIDER = Slider.ONE_SLIDER
             sliderLeft?.marginFromGrid = calculator?.MARGIN
 
         } else if (sliderRight == null) {
 
             if (x >= sliderLeft?.point!!.x) {
-                sliderRight = Slider(x, 0f)
+                sliderRight = Slider(context, x, 0f)
                 sliderRight?.STATE_SLIDER = Slider.RIGHT_SLIDER
                 sliderRight?.marginFromGrid = calculator?.MARGIN
                 sliderLeft?.STATE_SLIDER = Slider.LEFT_SLIDER
             } else {
-                sliderRight = Slider(sliderLeft?.point!!.x, 0f)
+                sliderRight = Slider(context, sliderLeft?.point!!.x, 0f)
                 sliderRight?.STATE_SLIDER = Slider.RIGHT_SLIDER
-                sliderLeft = Slider(x, 0f)
+                sliderLeft = Slider(context, x, 0f)
                 sliderLeft?.STATE_SLIDER = Slider.LEFT_SLIDER
                 sliderRight?.marginFromGrid = calculator?.MARGIN
                 sliderLeft?.marginFromGrid = calculator?.MARGIN
             }
 
         } else if (x >= sliderLeft?.point!!.x) {
-            sliderRight = Slider(x, 0f)
+            sliderRight = Slider(context, x, 0f)
             sliderRight?.STATE_SLIDER = Slider.RIGHT_SLIDER
             sliderLeft?.STATE_SLIDER = Slider.LEFT_SLIDER
         } else if (x < sliderLeft?.point!!.x) {
-            sliderRight = Slider(sliderLeft?.point!!.x, 0f)
+            sliderRight = Slider(context, sliderLeft?.point!!.x, 0f)
             sliderRight?.STATE_SLIDER = Slider.RIGHT_SLIDER
-            sliderLeft = Slider(x, 0f)
+            sliderLeft = Slider(context, x, 0f)
             sliderLeft?.STATE_SLIDER = Slider.LEFT_SLIDER
         }
 
@@ -418,8 +424,14 @@ class DrawGridView : View {
 
     fun changeMaxMin(pMAX: Point, pMIN: Point) {
         calculator?.changeMaxMin(pMAX, pMIN)
+        Log.d("INVALIDATE", "call invalidate 5");
         invalidate()
         //TODO: 28.04.2018 INVALIDATE
+    }
+
+    override fun invalidateAfterCalculating() {
+        Log.d("INVALIDATE", "call invalidate 6");
+        invalidate()
     }
 
 

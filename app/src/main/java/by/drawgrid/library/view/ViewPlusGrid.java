@@ -165,7 +165,7 @@ public class ViewPlusGrid extends View {
 
         grid = new Grid(context);
         grid.margin = calculator.getMARGIN();
-        polygon = new Polygon(contextr);
+        polygon = new Polygon(context);
 
         setSlider(65);
         setSlider(55);
@@ -185,7 +185,7 @@ public class ViewPlusGrid extends View {
     public void setSlider(float x) {
         if ((sliderLeft == null)) {
 
-            sliderLeft = new Slider(x, 0);
+            sliderLeft = new Slider(getContext(),x, 0);
             sliderLeft.STATE_SLIDER = Slider.ONE_SLIDER;
             sliderLeft.marginFromGrid = calculator.getMARGIN();
             ;
@@ -193,15 +193,15 @@ public class ViewPlusGrid extends View {
         } else if (sliderRight == null) {
 
             if (x >= sliderLeft.point.x) {
-                sliderRight = new Slider(x, 0);
+                sliderRight = new Slider(getContext(),x, 0);
                 sliderRight.STATE_SLIDER = Slider.RIGHT_SLIDER;
                 sliderRight.marginFromGrid = calculator.getMARGIN();
                 ;
                 sliderLeft.STATE_SLIDER = Slider.LEFT_SLIDER;
             } else {
-                sliderRight = new Slider(sliderLeft.point.x, 0);
+                sliderRight = new Slider(getContext(),sliderLeft.point.x, 0);
                 sliderRight.STATE_SLIDER = Slider.RIGHT_SLIDER;
-                sliderLeft = new Slider(x, 0);
+                sliderLeft = new Slider(getContext(),x, 0);
                 sliderLeft.STATE_SLIDER = Slider.LEFT_SLIDER;
                 sliderRight.marginFromGrid = calculator.getMARGIN();
                 ;
@@ -209,13 +209,13 @@ public class ViewPlusGrid extends View {
             }
 
         } else if (x >= sliderLeft.point.x) {
-            sliderRight = new Slider(x, 0);
+            sliderRight = new Slider(getContext(),x, 0);
             sliderRight.STATE_SLIDER = Slider.RIGHT_SLIDER;
             sliderLeft.STATE_SLIDER = Slider.LEFT_SLIDER;
         } else if (x < sliderLeft.point.x) {
-            sliderRight = new Slider(sliderLeft.point.x, 0);
+            sliderRight = new Slider(getContext(),sliderLeft.point.x, 0);
             sliderRight.STATE_SLIDER = Slider.RIGHT_SLIDER;
-            sliderLeft = new Slider(x, 0);
+            sliderLeft = new Slider(getContext(),x, 0);
             sliderLeft.STATE_SLIDER = Slider.LEFT_SLIDER;
         }
 
@@ -339,7 +339,7 @@ public class ViewPlusGrid extends View {
                 if (stateFinger == STATE_POINT) {
                     Point pointDot = calculator.calkDotCoordinate(event.getX(), event.getY());
 
-                    Dot dot = new Dot(pointDot);
+                    Dot dot = new Dot(pointDot, getContext());
                     polygon.dots.add(dot);
                     // points.add(dot);
                     Log.d("field",

@@ -3,6 +3,7 @@ package by.drawgrid.library.view.kotlin
 import android.util.Log
 import android.view.ScaleGestureDetector
 import by.drawgrid.library.model.Point
+import by.drawgrid.library.myInterface.CalculatorListener
 
 
 open class GridCalculator : ScaleGestureDetector.SimpleOnScaleGestureListener() {
@@ -12,6 +13,8 @@ open class GridCalculator : ScaleGestureDetector.SimpleOnScaleGestureListener() 
         internal var MIN_SCALE = 0.00001f
         internal var DELTA_X_Y_FOR_FINGER = 10f
     }
+
+    var listener: CalculatorListener? = null
 
     var DELTA_X_Y_FOR_FINGER = 10f
     var MARGIN = 40f// make dependent dencity
@@ -99,22 +102,20 @@ open class GridCalculator : ScaleGestureDetector.SimpleOnScaleGestureListener() 
         pointMAX = pMAX
         pointMIN = pMIN
         calcDrawKoeficient()
-//        invalidate()
-        //todo invalidate
+        listener?.invalidateAfterCalculating()
     }
 
     fun moveSystem(dx: Float, dy: Float) {
 
         val copyPoint = Point(pointMAX?.x!!, pointMAX?.y!!)
 
-        pointMAX?.x!!.minus(flag_scroll_X * dx / DrawKoeficientX)
+        pointMAX?.x = pointMAX?.x!!.minus(flag_scroll_X * dx / DrawKoeficientX)
         /** (copyPoint.x - pointMIN.x) / W */
-        pointMIN?.x!!.minus(flag_scroll_X * dx / DrawKoeficientX)
+        pointMIN?.x = pointMIN?.x!!.minus(flag_scroll_X * dx / DrawKoeficientX)
         /** (copyPoint.x - pointMIN.x) / W */
-
-        pointMAX?.y!!.plus(flag_scroll_Y * dy / DrawKoeficientY)
+        pointMAX?.y = pointMAX?.y!!.plus(flag_scroll_Y * dy / DrawKoeficientY)
         /** (copyPoint.y - pointMIN.y) / H */
-        pointMIN?.y!!.plus(flag_scroll_Y * dy / DrawKoeficientY)
+        pointMIN?.y = pointMIN?.y!!.plus(flag_scroll_Y * dy / DrawKoeficientY)
         /** (copyPoint.y - pointMIN.y) / H*/
 
     }
@@ -149,7 +150,7 @@ open class GridCalculator : ScaleGestureDetector.SimpleOnScaleGestureListener() 
 
         }
         calcDrawKoeficient()
-        // invalidate();
+        listener?.invalidateAfterCalculating()
         return true
     }
 

@@ -1,6 +1,7 @@
 package by.drawgrid.library.model;
 
 
+import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -19,17 +20,17 @@ public class Dot extends Element {
     Paint paintText;
 
 
-    public Dot() {
-        super(Constant.TYPE_DOT);
+    public Dot(Context context) {
+        super(context, Constant.TYPE_DOT);
         point = new Point();
         init(gridCalculator.getDPI_DENSITY());
     }
 
 
-    public Dot(Point p) {
-        super(Constant.TYPE_DOT);
+    public Dot(Point p, Context context) {
+        super(context, Constant.TYPE_DOT);
         point = p;
-        init(gridCalculator.getDPI_DENSITY());
+        init(dpi);
     }
 
 

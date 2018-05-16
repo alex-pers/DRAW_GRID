@@ -17,17 +17,22 @@ public class Polygon extends Element {
 
 
     public Polygon(Context context) {
-        super(contextConstant.TYPE_POLYGON);
+        super(context, Constant.TYPE_POLYGON);
         init();
     }
 
     void init() {
 
-        widthLine *= gridCalculator.getDPI_DENSITY();
+        widthLine *= dpi;
         linePaint = new Paint();
         linePaint.setStyle(Paint.Style.STROKE);
         linePaint.setColor(Color.BLUE);
         linePaint.setStrokeWidth(widthLine);
+    }
+
+    public void addDot( Dot dot){
+        dot.gridCalculator = gridCalculator;
+        dots.add(dot);
 
     }
 
@@ -76,7 +81,7 @@ public class Polygon extends Element {
     }
 
     private boolean lineInDrawRect(Dot dot1, Dot dot2) {//���� ���-- ������, ���� �����-- ���
-        if (Dot.pointInDrawRect(dot1.point,gridCalculator) || Dot.pointInDrawRect(dot2.point,gridCalculator) || Dot.pointInDrawRect(new Point(dot1.point.x, dot2.point.y),gridCalculator) || Dot.pointInDrawRect(new Point(dot1.point.y, dot2.point.x),gridCalculator))
+        if (Dot.pointInDrawRect(dot1.point, gridCalculator) || Dot.pointInDrawRect(dot2.point, gridCalculator) || Dot.pointInDrawRect(new Point(dot1.point.x, dot2.point.y), gridCalculator) || Dot.pointInDrawRect(new Point(dot1.point.y, dot2.point.x), gridCalculator))
             return true;
         return false;
     }
