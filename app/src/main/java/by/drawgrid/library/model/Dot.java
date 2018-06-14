@@ -23,7 +23,7 @@ public class Dot extends Element {
     public Dot(Context context) {
         super(context, Constant.TYPE_DOT);
         point = new Point();
-        init(gridCalculator.getDPI_DENSITY());
+        init(dpi);
     }
 
 

@@ -37,7 +37,7 @@ dependencies {
         transitive = true;
     }
     implementation 'com.android.support:multidex:1.0.1'
-    implementation 'com.android.support:design:27.0.2'
+    implementation 'com.android.support:design:27.1.1'
 
     //additional availability for Android Kotlin
     implementation 'com.pawegio.kandroid:kandroid:0.5.0@aar'
