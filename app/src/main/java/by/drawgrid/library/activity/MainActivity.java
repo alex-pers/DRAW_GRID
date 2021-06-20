@@ -37,13 +37,10 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        SharedPreferences preferences =
-                PreferenceManager.getDefaultSharedPreferences(this);
-
-        viewPlusGrid.setFlagForScaleX(preferences.getBoolean(getString(R.string.pr_scaleX), true));
-        viewPlusGrid.setFlagForScaleY(preferences.getBoolean(getString(R.string.pr_scaleY), true));
-        viewPlusGrid.setFlagForScrollX(preferences.getBoolean(getString(R.string.pr_scrollX), true));
-        viewPlusGrid.setFlagForScrollY(preferences.getBoolean(getString(R.string.pr_scrollY), true));
+        viewPlusGrid.setFlagForScaleX(true);
+        viewPlusGrid.setFlagForScaleY(false);
+        viewPlusGrid.setFlagForScrollX(true);
+        viewPlusGrid.setFlagForScrollY(false);
 
     }
 

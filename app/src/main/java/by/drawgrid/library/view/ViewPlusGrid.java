@@ -1,10 +1,14 @@
 package by.drawgrid.library.view;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Handler;
 import android.os.Message;
 import android.util.AttributeSet;
@@ -29,18 +33,18 @@ public class ViewPlusGrid extends View {
 
 	public static final int INVALIDATE_VIEW = 1;
 	public static final long TIMER_FOR_REDRAW = 30;
-	static public Point pointMAX /*= new Point(20, 1);// */;
-	static public Point pointMIN /*= new Point(0, 0);// */;
+	static public Point decartPointEnd;
+	static public Point decartPointStart;
 	static public float DrawKoeficientX = 1f;
 	static public float DrawKoeficientY = 1f;
 	static public float DPI_DENSITY = 1f;
 	
 	static public float W = 100;
-	static public float H = 100;
+	static public float H = 180;
 
 	// FLAGS
-	float MAX_SCALE = 100f;
-	float MIN_SCALE = 0.00001f;
+	float MAX_SCALE = 10000000000f;
+	float MIN_SCALE = 0.0000000001f;
 	float DELTA_X_Y_FOR_FINGER = 10;
 	boolean flag_event_for_redrow_view = true;
 	int flag_scroll_X = 1;//
@@ -62,8 +66,11 @@ public class ViewPlusGrid extends View {
 	
 	
 	// fod draw
-	private float startMaxX = 20;
-	private float startMaxY = 1;
+	private float startMaxX = 1623974400000f;
+	private float startMaxY = 10;
+
+	private float startMinX = 1621382400000f;
+	private float startMinY = 4;
 	boolean flagAutoScrollRight = false;
 	boolean flagAutoScrollLeft = false;
 	boolean flagautoScrollTop = false;
@@ -106,9 +113,9 @@ public class ViewPlusGrid extends View {
 
 	public static Point calcDrawCoordinate(Point pointDecart) {
 		float x = ViewPlusGrid.DrawKoeficientX
-				* (pointDecart.x - ViewPlusGrid.pointMIN.x);
+				* (pointDecart.x - ViewPlusGrid.decartPointStart.x);
 		float y = ViewPlusGrid.H - ViewPlusGrid.DrawKoeficientY
-				* (pointDecart.y - ViewPlusGrid.pointMIN.y);
+				* (pointDecart.y - ViewPlusGrid.decartPointStart.y);
 
 		return new Point(x, y);
 	}
@@ -144,8 +151,8 @@ public class ViewPlusGrid extends View {
 	}
 	void init(Context context) {
 		
-		pointMAX = new Point(startMaxX, startMaxY);
-		pointMIN = new Point(0, 0);
+		decartPointEnd = new Point(startMaxX, startMaxY);
+		decartPointStart = new Point(startMinX, startMinY);
 		
 		DisplayMetrics dm = context.getResources().getDisplayMetrics();
 		DPI_DENSITY = dm.density;
@@ -154,26 +161,48 @@ public class ViewPlusGrid extends View {
 		DELTA_X_Y_FOR_FINGER *= DPI_DENSITY;
 		
 		grid = new Grid();
-		grid.margin = MARGIN;
+		grid.setMarginVerticalRectangle(MARGIN);
 		polygon = new Polygon();
+		polygon.dots.addAll(getStupDots());
 		
-		setSlider(65);
-		setSlider(55);
+//		setSlider(65);
+//		setSlider(55);
 		// max min
-		
-		
-		
-		
-		
-		
-		
+
 		mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
 		addElementToManager(polygon);
 		myTimer = new Timer();
 		timerTask = new MyTimerTask(handler);
 	}
-	
-	
+
+	private List<Dot> getStupDots(){
+		List<Dot> subDots = new ArrayList<>();
+		subDots.add(new Dot(new Point(1621382400000f, 6.2604f)));
+		subDots.add(new Dot(new Point(1621468800000f, 6.3473f)));
+		subDots.add(new Dot(new Point(1621555200000f, 6.438f)));
+		subDots.add(new Dot(new Point(1621814400000f, 6.3851f)));
+		subDots.add(new Dot(new Point(1621900800000f, 6.6496f)));
+		subDots.add(new Dot(new Point(1621987200000f, 7.02f)));
+		subDots.add(new Dot(new Point(1622073600000f, 6.7705f)));
+		subDots.add(new Dot(new Point(1622160000000f, 6.8877f)));
+		subDots.add(new Dot(new Point(1622505600000f, 6.7479f)));
+		subDots.add(new Dot(new Point(1622592000000f, 6.7819f)));
+		subDots.add(new Dot(new Point(1622678400000f, 6.574f)));
+		subDots.add(new Dot(new Point(1622764800000f, 6.5929f)));
+		subDots.add(new Dot(new Point(1623024000000f, 6.6949f)));
+		subDots.add(new Dot(new Point(1623110400000f, 6.9859f)));
+		subDots.add(new Dot(new Point(1623196800000f, 6.8839f)));
+		subDots.add(new Dot(new Point(1623283200000f, 6.7932f)));
+		subDots.add(new Dot(new Point(1623369600000f, 6.9179f)));
+		subDots.add(new Dot(new Point(1623628800000f, 6.9557f)));
+		subDots.add(new Dot(new Point(1623715200000f, 6.8537f)));
+		subDots.add(new Dot(new Point(1623801600000f, 6.9103f)));
+		subDots.add(new Dot(new Point(1623888000000f, 7.3673f)));
+		subDots.add(new Dot(new Point(1623974400000f, 7.02f)));
+		return subDots;
+	}
+
+
 	/**
 	 * 
 	 * @param x внутренней системы координат
@@ -203,6 +232,7 @@ public class ViewPlusGrid extends View {
 			 
 		 }else if(x>=sliderLeft.point.x){
 			 sliderRight = new Slider(x, 0);
+			 sliderRight.marginFromGrid = MARGIN;
 			 sliderRight.STATE_SLIDER = Slider.RIGHT_SLIDER;
 			 sliderLeft.STATE_SLIDER = Slider.LEFT_SLIDER;
 		 } else if(x<sliderLeft.point.x){
@@ -210,6 +240,8 @@ public class ViewPlusGrid extends View {
 			 sliderRight.STATE_SLIDER = Slider.RIGHT_SLIDER;
 			 sliderLeft = new Slider(x, 0);
 			 sliderLeft.STATE_SLIDER = Slider.LEFT_SLIDER;
+			 sliderRight.marginFromGrid = MARGIN;
+			 sliderLeft.marginFromGrid = MARGIN;
 		 }
 
 	 }
@@ -217,8 +249,6 @@ public class ViewPlusGrid extends View {
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
-
-
 		W = w;
 		H = h ;
 		calcDrawKoeficient();
@@ -235,6 +265,7 @@ public class ViewPlusGrid extends View {
 		}
 		
 		grid.drawHorizontalRange(canvas);
+		drawSliderShadow(canvas);
 		drawSliders(canvas);
 		grid.drawVerticalRange(canvas);
 	}
@@ -247,6 +278,17 @@ public class ViewPlusGrid extends View {
 			sliderRight.draw(canvas);
 		}
 		
+	}
+
+	private void drawSliderShadow(Canvas canvas){
+	 	if(sliderLeft != null && sliderRight != null){
+			Paint paintRect = new Paint();
+			paintRect.setStyle(Paint.Style.FILL);
+			paintRect.setColor(Color.WHITE);
+			paintRect.setAlpha(180);
+			canvas.drawRect(0, 0, sliderLeft.pointDraw.x, ViewPlusGrid.H, paintRect);
+			canvas.drawRect(sliderRight.pointDraw.x, 0, ViewPlusGrid.W, ViewPlusGrid.H, paintRect);
+		}
 	}
 	
 	public void clearDrawFild(Context context){
@@ -262,8 +304,6 @@ public class ViewPlusGrid extends View {
 		
 	}
 
-	
-	
 	void setFlagForInvalidate(boolean b){
 		flag_event_for_redrow_view =b;
 	}
@@ -338,8 +378,9 @@ public class ViewPlusGrid extends View {
 			if (stateFinger == STATE_POINT) {
 				Point pointDot = calkDotCoordinate(event.getX(), event.getY());
 
-				Dot dot = new Dot(pointDot);
-				polygon.dots.add(dot);
+//				Dot dot = new Dot(pointDot);
+//				polygon.dots.add(dot);
+				setSlider(pointDot.x);
 				// points.add(dot);
 				Log.d("field",
 						"touch x:" + event.getX() + "  y:" + event.getY()
@@ -434,9 +475,7 @@ public class ViewPlusGrid extends View {
 			return true;
 		}
 	};
-	
 
-	
 	private boolean fingerInHorizontalMargin(float x, float y){// если фолс -- не попал, тру - попал
 		
 		if( y >= H-MARGIN )
@@ -473,15 +512,12 @@ public class ViewPlusGrid extends View {
 	}
 	
 	private void moveSlider(float dx,int activeSlider){
-		
-		
+
 		switch (activeSlider) {
 		case 1:
-
 			if(flagAutoScrollLeft){
 				 moveSystem(dx, 0);//двигаем систему
 				 sliderLeft.point= calkDotCoordinate(sliderLeft.pointDraw.x, sliderLeft.pointDraw.y);//пересчитываем координаты слайдера
-				
 			}else if(flagAutoScrollRight){//если автоскролл вправо
 				
 				 if(sliderLeft.STATE_SLIDER == Slider.LEFT_SLIDER){// если есть правый
@@ -497,10 +533,7 @@ public class ViewPlusGrid extends View {
 					 sliderLeft.point= calkDotCoordinate(sliderLeft.pointDraw.x, sliderLeft.pointDraw.y);//пересчитываем координаты слайдера
 				
 				 }
-				
-				
-				
-				
+
 			} else{
 			
 				if(sliderLeft.STATE_SLIDER == Slider.ONE_SLIDER){
@@ -526,20 +559,12 @@ public class ViewPlusGrid extends View {
 						 moveSystem( dx, 0);//двигаем систему
 						 sliderRight.point= calkDotCoordinate(sliderRight.pointDraw.x, sliderRight.pointDraw.y);//пересчитываем координаты слайдера
 					 }
-				
-				
-				
-				
-				
-				
-				
+
 			}else if(flagAutoScrollRight){//если автоскролл вправо
 
 					moveSystem(-dx, 0);//двигаем систему
 					sliderRight.point= calkDotCoordinate(sliderRight.pointDraw.x, sliderRight.pointDraw.y);//пересчитываем координаты слайдера
-				
-				
-				
+
 			} else{
 			
 				 if((sliderRight.pointDraw.x-sliderLeft.pointDraw.x) >  -dx){
@@ -557,37 +582,31 @@ public class ViewPlusGrid extends View {
 	
 	private void moveSystem(float dx, float dy) {
 		
-	
-		Point copyPoint= new Point(pointMAX.x, pointMAX.y);
-		
-		pointMAX.x -= flag_scroll_X* dx/DrawKoeficientX /** (copyPoint.x - pointMIN.x) / W*/;
-		pointMIN.x -= flag_scroll_X* dx/ DrawKoeficientX /** (copyPoint.x - pointMIN.x) / W*/;
+		decartPointEnd.x -= flag_scroll_X* dx/DrawKoeficientX;
+		decartPointStart.x -= flag_scroll_X* dx/ DrawKoeficientX;
 
-		pointMAX.y += flag_scroll_Y* dy/DrawKoeficientY /** (copyPoint.y - pointMIN.y) / H*/;
-		pointMIN.y += flag_scroll_Y* dy/DrawKoeficientY /* * (copyPoint.y - pointMIN.y) / H*/;
-
+		decartPointEnd.y += flag_scroll_Y* dy/DrawKoeficientY;
+		decartPointStart.y += flag_scroll_Y* dy/DrawKoeficientY;
 	}
 
-	private void correctScaleP0(float scaleLoc, Point focusPDraw) {
-
-		 correctScaleX(scaleLoc, focusPDraw);
-		 correctScaleY(scaleLoc, focusPDraw);
-		
-
+	private void correctScaleP0(float scaleLocal, Point focusPDraw) {
+		 correctScaleX(scaleLocal, focusPDraw);
+		 correctScaleY(scaleLocal, focusPDraw);
 	}
 
-	private void correctScaleX(float scaleLoc, Point focusPDraw) {
+	private void correctScaleX(float scaleLocal, Point focusPDraw) {
 		
-		Log.d("view", "DrawKoeficientX = "+DrawKoeficientX);
-//		if((grid.sizeSquareX < MAX_SCALE && scaleLoc<1 ) || (grid.sizeSquareX > MIN_SCALE && scaleLoc>1)){// ограничение по размеру квадратика
-		if((1/DrawKoeficientX< MAX_SCALE && scaleLoc<1 ) || (1/DrawKoeficientX> MIN_SCALE && scaleLoc>1)){// ограничение по скэйлу
+		Log.d("correctScaleX", "  DrawKoeficientX = "+DrawKoeficientX + "");
+		Log.d("correctScaleX", "  scaleLocal = "+scaleLocal + "");
+		if((1/DrawKoeficientX< MAX_SCALE && scaleLocal<1 ) || (1/DrawKoeficientX> MIN_SCALE && scaleLocal>1)){// ограничение по скэйлу
 			Point pointkoeficient = calculateKoeficientForScale(focusPDraw);
-	
+
 			float kx = pointkoeficient.x;
-			float x1 = (kx * pointMAX.x + pointMIN.x) / (1 + kx);
-	
-			pointMAX.x = (pointMAX.x - x1) / scaleLoc + x1;
-			pointMIN.x = (pointMIN.x - x1) / scaleLoc + x1;
+			float x1 = (decartPointEnd.x- decartPointStart.x) / kx + decartPointStart.x;// точка от которой надо делать скейл в вымышленной системе
+			//(kx * decartPointEnd.x + decartPointStart.x) / (1 + kx)
+
+			decartPointEnd.x = (decartPointEnd.x - x1) / scaleLocal + x1;
+			decartPointStart.x = (decartPointStart.x - x1) / scaleLocal + x1;
 		}
 
 	}
@@ -599,36 +618,38 @@ public class ViewPlusGrid extends View {
 			Point pointkoeficient = calculateKoeficientForScale(focusPDraw);
 	
 			float ky = pointkoeficient.y;
-			float y1 = (ky * pointMAX.y + pointMIN.y) / (1 + ky);
+			float y1 = (ky * decartPointEnd.y + decartPointStart.y) / (1 + ky);
 	
-			pointMAX.y = (pointMAX.y - y1) / scaleLoc + y1;
-			pointMIN.y = (pointMIN.y - y1) / scaleLoc + y1;
+			decartPointEnd.y = (decartPointEnd.y - y1) / scaleLoc + y1;
+			decartPointStart.y = (decartPointStart.y - y1) / scaleLoc + y1;
 		}
 
 	}
 
 	private Point calculateKoeficientForScale(Point px) {
-		return new Point((-px.x) / (px.x - W), (H - px.y) / (px.y));
+		return new Point((W) / (px.x), (H - px.y) / (px.y));
+		// Point((-px.x) / (px.x - W), (H - px.y) / (px.y));
+		// X AND Y calculated in different way just for fun
 	}
 
 	public static Point calkDotCoordinate(float x, float y) {
 		y = H - y;
 
-		float x1 = (x * (pointMAX.x - pointMIN.x) / W) + pointMIN.x;
-		float y1 = (y * (pointMAX.y - pointMIN.y) / H) + pointMIN.y;
+		float x1 = (x * (decartPointEnd.x - decartPointStart.x) / W) + decartPointStart.x;
+		float y1 = (y * (decartPointEnd.y - decartPointStart.y) / H) + decartPointStart.y;
 		
 		return new Point(x1, y1);
 
 	}
 	
 	private void calcDrawKoeficient() {
-		DrawKoeficientX = (ViewPlusGrid.W / (ViewPlusGrid.pointMAX.x - ViewPlusGrid.pointMIN.x));
-		DrawKoeficientY = (ViewPlusGrid.H / (ViewPlusGrid.pointMAX.y - ViewPlusGrid.pointMIN.y));
+		DrawKoeficientX = (ViewPlusGrid.W / (ViewPlusGrid.decartPointEnd.x - ViewPlusGrid.decartPointStart.x));
+		DrawKoeficientY = (ViewPlusGrid.H / (ViewPlusGrid.decartPointEnd.y - ViewPlusGrid.decartPointStart.y));
 	}
 	
 	public void changeMaxMin(Point pMAX, Point pMIN){
-		pointMAX = pMAX;
-		pointMIN = pMIN;
+		decartPointEnd = pMAX;
+		decartPointStart = pMIN;
 		calcDrawKoeficient();
 		invalidate();
 		

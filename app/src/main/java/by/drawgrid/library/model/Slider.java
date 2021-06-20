@@ -4,6 +4,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Typeface;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import by.drawgrid.library.view.ViewPlusGrid;
 
@@ -24,8 +29,9 @@ public class Slider extends Element {
 	Path wallpath ;
 	public float marginFromGrid = 40;
 	float lineWidth = 2;
-	public float coachWidth = 30;
+	public float coachWidth = 35;
 	float textSize = 12;
+	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM", Locale.US);
 	
 	
 
@@ -56,8 +62,9 @@ public class Slider extends Element {
 		paintLine.setStrokeWidth(lineWidth);
 		
 		paintText = new Paint();
-		paintText.setStyle(Paint.Style.STROKE);
-		paintText.setColor(Color.BLUE);
+		paintText.setStyle(Paint.Style.FILL);
+		paintText.setColor(Color.WHITE);
+		paintText.setTypeface(Typeface.DEFAULT_BOLD);
 		paintText.setTextSize(textSize);
 		
 		paintCoach = new Paint();
@@ -70,8 +77,8 @@ public class Slider extends Element {
 	
 	@Override
 	public void draw(Canvas canvas) {
-		
-
+		Date date = new Date((long) point.x);
+		String str = sdf.format(date);
 		
 		if(STATE_SLIDER == ONE_SLIDER){
 		
@@ -89,7 +96,7 @@ public class Slider extends Element {
 			wallpath.lineTo(xDraw, ViewPlusGrid.H-marginFromGrid);
 			canvas.drawPath(wallpath, paintCoach);
 			
-			String str = String.format(" %.0f", point.x);
+
 			canvas.drawText(str, xDraw-paintText.measureText(str)/2, (float) (ViewPlusGrid.H-(marginFromGrid/4))  , paintText);
 		}
 		
@@ -108,8 +115,7 @@ public class Slider extends Element {
 			wallpath.lineTo(xDraw, ViewPlusGrid.H-marginFromGrid);
 		
 			canvas.drawPath(wallpath, paintCoach);
-			
-			String str = String.format(" %.0f", point.x);
+
 			canvas.drawText(str, xDraw-coachWidth, (float) (ViewPlusGrid.H-(marginFromGrid/4))  , paintText);
 		}
 		
@@ -128,8 +134,7 @@ public class Slider extends Element {
 			wallpath.lineTo(xDraw, ViewPlusGrid.H-marginFromGrid);
 		
 			canvas.drawPath(wallpath, paintCoach);
-			
-			String str = String.format(" %.0f", point.x);
+
 			canvas.drawText(str, xDraw, (float) (ViewPlusGrid.H-(marginFromGrid/4))  , paintText);
 		}
 		

@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 
 import by.drawgrid.library.view.ViewPlusGrid;
 
@@ -13,7 +14,7 @@ public class Dot extends Element {
 
 	Point point;
 	
-	 public int radiusCircle=5;
+	 public int radiusCircle=2;
 	float circleWidht=4;
 	Paint paintCircle;
 	Paint paintText;
@@ -43,12 +44,13 @@ public class Dot extends Element {
 		paintText = new Paint();
 		
 		paintCircle.setStyle(Paint.Style.FILL_AND_STROKE);
-		paintCircle.setColor(Color.GREEN);
+		paintCircle.setColor(Color.parseColor("#33CC99"));
 		paintCircle.setStrokeWidth(circleWidht);
 		
-		paintText.setStyle(Paint.Style.STROKE);
+		paintText.setStyle(Paint.Style.FILL_AND_STROKE);
 		paintText.setColor(Color.BLACK);
-		paintText.setTextSize(16);
+		paintText.setTypeface(Typeface.DEFAULT_BOLD);
+		paintText.setTextSize(20);
 	}
 	
 	public void draw(Canvas canvas) {
@@ -65,7 +67,7 @@ public class Dot extends Element {
 		canvas.drawCircle(x, y , radiusCircle, paintCircle);
 
 		StringBuilder strText = new StringBuilder();
-		strText.append(point.x).append(" , ").append(point.y);
+		strText.append(point.y);
 		String label = strText.toString();
 
 		Paint paint = new Paint();
@@ -79,7 +81,7 @@ public class Dot extends Element {
 	}
 	
 	public static boolean pointInDrawRect(Point point){
-		 if((point.x>ViewPlusGrid.pointMAX.x)||(point.y>ViewPlusGrid.pointMAX.y)||(point.x < ViewPlusGrid.pointMIN.x)||(point.y < ViewPlusGrid.pointMIN.y)){
+		 if((point.x>ViewPlusGrid.decartPointEnd.x)||(point.y>ViewPlusGrid.decartPointEnd.y)||(point.x < ViewPlusGrid.decartPointStart.x)||(point.y < ViewPlusGrid.decartPointStart.y)){
 			 return false;
 		 }
 		

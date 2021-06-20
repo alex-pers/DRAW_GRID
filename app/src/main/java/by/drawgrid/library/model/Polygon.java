@@ -29,7 +29,7 @@ public class Polygon extends Element {
 		
 		linePaint = new Paint();
 		linePaint.setStyle(Paint.Style.STROKE);
-		linePaint.setColor(Color.BLUE);
+		linePaint.setColor(Color.parseColor("#33CC99"));
 		linePaint.setStrokeWidth(widthLine);
 
 	}
